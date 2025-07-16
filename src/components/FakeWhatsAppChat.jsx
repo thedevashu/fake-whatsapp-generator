@@ -21,7 +21,7 @@ export default function FakeWhatsAppChat() {
   };
 
   const handleDownload = async () => {
-    const chat = document.getElementById("chat-area");
+    const chat = document.getElementById("chat-container");
     if (!chat) return;
     const canvas = await html2canvas(chat);
     const link = document.createElement("a");
@@ -46,37 +46,41 @@ export default function FakeWhatsAppChat() {
         </CardContent>
       </Card>
 
-      {/* WhatsApp Header */}
-      <div className="flex items-center gap-3 mb-2 p-2 bg-green-600 text-white rounded-t-lg">
-        {profilePic ? (
-          <img src={profilePic} alt="profile" className="w-10 h-10 rounded-full object-cover" />
-        ) : (
-          <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center font-bold">
-            {name[0] || "?"}
+      {/* Chat container including header and messages */}
+      <div id="chat-container" className="rounded-lg overflow-hidden border border-gray-300">
+        {/* WhatsApp Header */}
+        <div className="flex items-center gap-3 p-2 bg-green-600 text-white">
+          {profilePic ? (
+            <img src={profilePic} alt="profile" className="w-10 h-10 rounded-full object-cover" />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center font-bold">
+              {name[0] || "?"}
+            </div>
+          )}
+          <div>
+            <div className="font-semibold">{name || "User"}</div>
+            <div className="text-xs text-white/80">online</div>
           </div>
-        )}
-        <div>
-          <div className="font-semibold">{name || "User"}</div>
-          <div className="text-xs text-white/80">online</div>
         </div>
-      </div>
 
-      <div id="chat-area" className="bg-green-50 rounded-b-lg p-4 space-y-2 min-h-[200px] flex flex-col">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`inline-block px-3 py-2 rounded-xl text-sm whitespace-pre-wrap break-words ${
-              msg.sender === "user"
-                ? "bg-green-200 ml-auto text-right self-end"
-                : "bg-white text-left self-start"
-            }`}
-          >
-            <>
-              <div>{msg.text}</div>
-              <div className="text-[10px] text-gray-500 mt-1">{msg.time}</div>
-            </>
-          </div>
-        ))}
+        {/* Chat area */}
+        <div id="chat-area" className="bg-green-50 p-4 space-y-2 min-h-[200px] flex flex-col">
+          {messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={`inline-block px-3 py-2 rounded-xl text-sm whitespace-pre-wrap break-words ${
+                msg.sender === "user"
+                  ? "bg-green-200 ml-auto text-right self-end"
+                  : "bg-white text-left self-start"
+              }`}
+            >
+              <>
+                <div>{msg.text}</div>
+                <div className="text-[10px] text-gray-500 mt-1">{msg.time}</div>
+              </>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Sender toggle */}
