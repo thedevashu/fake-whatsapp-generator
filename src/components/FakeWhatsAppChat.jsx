@@ -7,7 +7,7 @@ import { Download, Send, Phone, Video, MoreVertical, ArrowLeft } from "lucide-re
 import html2canvas from "html2canvas-pro";
 
 export default function FakeWhatsAppChat() {
-  const [name, setName] = useState("Ashutosh");
+  const [name, setName] = useState("user name");
   const [profilePic, setProfilePic] = useState("");
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
